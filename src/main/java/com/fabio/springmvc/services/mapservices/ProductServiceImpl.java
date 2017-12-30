@@ -22,16 +22,6 @@ public class ProductServiceImpl extends AbstractMapService implements ProductSer
     @Override
     protected void loadDomainObjects() {
         domainMap = new HashMap<>();
-        domainMap.put(1, new Product(1, "Product 1", new BigDecimal("12.99")
-                ,"http://example.com/product1"));
-        domainMap.put(2, new Product(2, "Product 2", new BigDecimal("14.99")
-                ,"http://example.com/product2"));
-        domainMap.put(3, new Product(3, "Product 3", new BigDecimal("16.99")
-                ,"http://example.com/product3"));
-        domainMap.put(4, new Product(4, "Product 4", new BigDecimal("24.99")
-                ,"http://example.com/product4"));
-        domainMap.put(5, new Product(5, "Product 5", new BigDecimal("34.99")
-                ,"http://example.com/product5"));
     }
 
     @Override

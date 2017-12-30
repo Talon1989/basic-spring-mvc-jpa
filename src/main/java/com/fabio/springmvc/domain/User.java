@@ -3,13 +3,8 @@ package com.fabio.springmvc.domain;
 import javax.persistence.*;
 
 @Entity
-public class User implements DomainObject {
+public class User extends AbstractDomainClass implements DomainObject {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    @Version
-    private Integer version;
     private String username;
     @Transient // not gonna persist in the database
     private String password;
@@ -21,24 +16,6 @@ public class User implements DomainObject {
     private Cart cart;
 
     public User() {
-    }
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
     public String getUsername() {

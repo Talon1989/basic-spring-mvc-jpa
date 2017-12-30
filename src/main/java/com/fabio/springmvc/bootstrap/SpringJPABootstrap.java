@@ -31,16 +31,35 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
     }
 
     private void loadProduct(){
-        productService.saveOrUpdate(new Product("Product 1", new BigDecimal("12.99")
-                , "http://example.com/product1"));
-        productService.saveOrUpdate(new Product("Product 2", new BigDecimal("14.99")
-                , "http://example.com/product2"));
-        productService.saveOrUpdate(new Product("Product 3", new BigDecimal("34.99")
-                , "http://example.com/product3"));
-        productService.saveOrUpdate(new Product("Product 4", new BigDecimal("44.99")
-                , "http://example.com/product4"));
-        productService.saveOrUpdate(new Product("Product 5", new BigDecimal("25.99")
-                , "http://example.com/product5"));
+        Product product1 = new Product();
+        product1.setDescription("Product 1");
+        product1.setPrice(new BigDecimal("12.99"));
+        product1.setImageUrl("http://example.com/product1");
+        productService.saveOrUpdate(product1);
+
+        Product product2 = new Product();
+        product2.setDescription("Product 2");
+        product2.setPrice(new BigDecimal("14.99"));
+        product2.setImageUrl("http://example.com/product2");
+        productService.saveOrUpdate(product2);
+
+        Product product3 = new Product();
+        product3.setDescription("Product 3");
+        product3.setPrice(new BigDecimal("34.99"));
+        product3.setImageUrl("http://example.com/product3");
+        productService.saveOrUpdate(product3);
+
+        Product product4 = new Product();
+        product4.setDescription("Product 4");
+        product4.setPrice(new BigDecimal("44.99"));
+        product4.setImageUrl("http://example.com/product4");
+        productService.saveOrUpdate(product4);
+
+        Product product5 = new Product();
+        product5.setDescription("Product 5");
+        product5.setPrice(new BigDecimal("25.99"));
+        product5.setImageUrl("http://example.com/product5");
+        productService.saveOrUpdate(product5);
     }
 
     private void loadCustomer(){

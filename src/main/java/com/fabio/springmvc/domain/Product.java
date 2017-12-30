@@ -4,38 +4,13 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-public class Product implements DomainObject{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    @Version
-    private Integer version;
+public class Product extends AbstractDomainClass implements DomainObject{
+
     private String description;
     private BigDecimal price;
     private String imageUrl;
 
     public Product() {
-    }
-
-    public Product(Integer id, String description, BigDecimal price, String imageUrl) {
-        this.id = id;
-        this.description = description;
-        this.price = price;
-        this.imageUrl = imageUrl;
-    }
-
-    public Product(String description, BigDecimal price, String imageUrl) {
-        this.description = description;
-        this.price = price;
-        this.imageUrl = imageUrl;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getDescription() {
@@ -62,11 +37,4 @@ public class Product implements DomainObject{
         this.imageUrl = imageUrl;
     }
 
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
 }
