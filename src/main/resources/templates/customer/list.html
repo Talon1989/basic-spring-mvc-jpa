@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Products</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.slim.js"
+            integrity="sha256-tA8y0XqiwnpwmOIl3SGAcFl2RvxHjA8qp0+1uCGmRmg="
+            crossorigin="anonymous"></script>
+    <link href="../../static/css/spring-core.css"
+          th:href="@{../../static/css/spring-core.css}"/>
+</head>
+<body>
+<div class="container">
+    <div th:if="${not #lists.isEmpty(customers)}">
+        <h2>Customer List</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>View</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="c : ${customers}">
+                <td th:text="${c.id}"/>
+                <td th:text="${c.firstName}"/>
+                <td th:text="${c.lastName}"/>
+                <td><a th:href="${'/customer/'+c.id}">View</a></td>
+                <td><a th:href="${'/customer/edit/'+c.id}">Edit</a></td>
+                <td><a th:href="${'/customer/delete/'+c.id}">Delete</a></td>
+            </tr>
+        </table>
+    </div>
+    <a href="#" th:href="@{'/customer/new'}">new customer</a>
+</div>
+</body>
+</html>

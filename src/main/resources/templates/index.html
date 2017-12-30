@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Core Basic</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.slim.js"
+            integrity="sha256-tA8y0XqiwnpwmOIl3SGAcFl2RvxHjA8qp0+1uCGmRmg="
+            crossorigin="anonymous"></script>
+    <link href="../static/css/spring-core.css"
+          th:href="@{../static/css/spring-core.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Hello World</h1>
+    <h2>index test</h2>
+    <table class="table table-striped">
+        <ul>
+            <li><a href="#" th:href="@{'/product/list'}">products</a></li>
+            <li><a href="#" th:href="@{'/customer/list'}">customers</a></li>
+        </ul>
+    </table>
+</div>
+</body>
+</html>
