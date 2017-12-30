@@ -28,7 +28,7 @@ public class CustomerServiceJpaDaoImplTest {
     @Test
     public void testList() throws Exception {
         List<Customer> customers = (List<Customer>)customerService.listAll();
-        assert customers.size()==2;
+        assert customers.size()==3;
     }
 
     @Test
