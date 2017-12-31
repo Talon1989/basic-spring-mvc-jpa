@@ -1,11 +1,11 @@
 package com.fabio.springmvc.bootstrap;
 
-import com.fabio.springmvc.domain.Address;
-import com.fabio.springmvc.domain.Customer;
-import com.fabio.springmvc.domain.Product;
-import com.fabio.springmvc.domain.User;
+import com.fabio.springmvc.domain.*;
+import com.fabio.springmvc.domain.enums.OrderStatus;
+import com.fabio.springmvc.domain.security.Role;
 import com.fabio.springmvc.services.CustomerService;
 import com.fabio.springmvc.services.ProductService;
+import com.fabio.springmvc.services.RoleService;
 import com.fabio.springmvc.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -13,6 +13,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Component
 public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedEvent>{
@@ -20,17 +21,23 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
     private ProductService productService;
     private CustomerService customerService;
     private UserService userService;
+    private RoleService roleService;
 
-    public SpringJPABootstrap(ProductService productService, CustomerService customerService, UserService userService) {
+    public SpringJPABootstrap(ProductService productService, CustomerService customerService, UserService userService, RoleService roleService) {
         this.productService = productService;
         this.customerService = customerService;
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         loadProduct();
         loadUsersAndCustomer();
+        loadCarts();
+        loadOrderHistory();
+        loadRoles();
+        assignUsersToDefaultRole();
     }
 
     private void loadProduct(){
@@ -109,6 +116,55 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
         user3.setCustomer(customer3);
         userService.saveOrUpdate(user3);
 //        customerService.saveOrUpdate(customer3);
+    }
+
+    private void loadOrderHistory(){
+        List<User> users = (List<User>)userService.listAll();
+        List<Product> products = (List<Product>)productService.listAll();
+        users.forEach(user->{
+            Order order = new Order();
+            order.setCustomer(user.getCustomer());
+            order.setOrderStatus(OrderStatus.SHIPPED);
+
+            products.forEach(product -> {
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.setProduct(product);
+                orderDetail.setQuantity(1);
+                order.addToOrderDetails(orderDetail);
+            });
+        });
+    }
+
+    private void loadCarts(){
+        List<User> users = (List<User>) userService.listAll();
+        List<Product> products = (List<Product>)productService.listAll();
+        users.forEach(user->{
+            user.setCart(new Cart());
+            CartDetail cartDetail = new CartDetail();
+            cartDetail.setProduct(products.get(0));
+            cartDetail.setQuantity(2);
+            user.getCart().addCartDetail(cartDetail);
+            userService.saveOrUpdate(user);
+        });
+    }
+
+    private void loadRoles(){
+        Role role = new Role();
+        role.setRole("CUSTOMER");
+        roleService.saveOrUpdate(role);
+    }
+
+    private void assignUsersToDefaultRole(){
+        List<Role>roles = (List<Role>)roleService.listAll();
+        List<User>users = (List<User>)userService.listAll();
+        roles.forEach(role->{
+            if(role.getRole().equalsIgnoreCase("CUSTOMER")){
+                users.forEach(user->{
+                    user.addRole(role);
+                    userService.saveOrUpdate(user);
+                });
+            }
+        });
     }
 
 }

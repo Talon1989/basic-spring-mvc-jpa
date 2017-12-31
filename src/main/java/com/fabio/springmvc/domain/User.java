@@ -1,6 +1,10 @@
 package com.fabio.springmvc.domain;
 
+import com.fabio.springmvc.domain.security.Role;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User extends AbstractDomainClass{
@@ -10,10 +14,28 @@ public class User extends AbstractDomainClass{
     private String password;
     private String encryptedPassword;
     private Boolean enabled = true;
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+//    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
     @OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true) // del all automatically
     private Cart cart;
+    @ManyToMany
+    @JoinTable
+    // -- check Role table for defaults
+    private List<Role> roles = new ArrayList<>();
+
+    public void addRole(Role role){
+        if(!this.roles.contains(role)){
+            this.roles.add(role);
+        }
+        if(!role.getUsers().contains(this))
+            role.getUsers().add(this);
+    }
+
+    public void removeRole(Role role){
+        this.roles.remove(role);
+        role.getUsers().remove(this);
+    }
 
     public User() {
     }
@@ -65,5 +87,13 @@ public class User extends AbstractDomainClass{
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }
