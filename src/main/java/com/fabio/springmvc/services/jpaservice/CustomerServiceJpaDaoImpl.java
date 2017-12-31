@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @Profile("jpadao")
-public class CustomerServiceJpaDaoImpl extends AbstactJpaDaoService implements CustomerService {
+public class CustomerServiceJpaDaoImpl extends AbstractJpaDaoService implements CustomerService {
 
 //    private EntityManagerFactory emf;
 //

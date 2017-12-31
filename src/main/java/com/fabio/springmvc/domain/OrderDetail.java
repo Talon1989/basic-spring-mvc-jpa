@@ -1,22 +1,24 @@
 package com.fabio.springmvc.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
-public class CartDetail extends AbstractDomainClass {
+public class OrderDetail extends AbstractDomainClass {
 
     @ManyToOne
-    private Cart cart;
+    private Order order;
     @OneToOne // unidirectional
     private Product product;
     private Integer quantity;
 
-    public Cart getCart() {
-        return cart;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Product getProduct() {

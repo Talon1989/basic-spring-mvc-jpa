@@ -1,46 +1,44 @@
 package com.fabio.springmvc.services.jpaservice;
 
-import com.fabio.springmvc.domain.Product;
-import com.fabio.springmvc.services.ProductService;
+import com.fabio.springmvc.domain.Order;
+import com.fabio.springmvc.services.OrderService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
 import java.util.List;
 
 @Service
 @Profile("jpadao")
-public class ProductServiceJpaDaoImpl extends AbstractJpaDaoService implements ProductService {
+public class OrderServiceJpaDaoImpl extends AbstractJpaDaoService implements OrderService{
 
     @Override
-    public List<Product> listAll() {
+    public List<?> listAll() {
         EntityManager em = emf.createEntityManager();
-        return  em.createQuery("from Product", Product.class)
+        return em.createQuery("from Order", Order.class)
                 .getResultList();
     }
 
     @Override
-    public Product getById(Integer id) {
+    public Order getById(Integer id) {
         EntityManager em = emf.createEntityManager();
-        return em.find(Product.class, id);
+        return em.find(Order.class, id);
     }
 
     @Override
-    public Product saveOrUpdate(Product domainObject) {
+    public Order saveOrUpdate(Order domainObject) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        Product savedProduct = em.merge(domainObject); // merge = save or update, persists but also updates
+        Order savedOrder = em.merge(domainObject);
         em.getTransaction().commit();
-        return savedProduct;
+        return savedOrder;
     }
 
     @Override
     public void delete(Integer id) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        em.remove(em.find(Product.class, id));
+        em.remove(em.find(Order.class, id));
         em.getTransaction().commit();
     }
 }

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-public class Product extends AbstractDomainClass implements DomainObject{
+public class Product extends AbstractDomainClass {
 
     private String description;
     private BigDecimal price;

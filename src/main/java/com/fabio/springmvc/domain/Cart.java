@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Cart extends AbstractDomainClass implements DomainObject {
+public class Cart extends AbstractDomainClass{
 
     @OneToOne
     private User user;

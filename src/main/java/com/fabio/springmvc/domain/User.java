@@ -3,14 +3,14 @@ package com.fabio.springmvc.domain;
 import javax.persistence.*;
 
 @Entity
-public class User extends AbstractDomainClass implements DomainObject {
+public class User extends AbstractDomainClass{
 
     private String username;
     @Transient // not gonna persist in the database
     private String password;
     private String encryptedPassword;
     private Boolean enabled = true;
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}) // if creates one doesn't automatically one customer
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Customer customer;
     @OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true) // del all automatically
     private Cart cart;
